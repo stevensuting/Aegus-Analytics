@@ -38,7 +38,11 @@
 
 - Load the yaml file which has all the production configurations to run in the background
 
-`sudo docker-compose -f docker-compose-non-dev.yml pull -d`
+`sudo docker-compose -f docker-compose-non-dev.yml pull`
+
+- Then start all production containers for superset to run in the background
+
+`sudo docker-compose -f docker-compose-non-dev.yml up -d`
 
 - You should see this
 ```
@@ -64,6 +68,12 @@ c1c6e5a2ccef   redis:7                         8 minutes ago   Up 8 minutes     
 ```
 
 
+- Superset will be available on 
+```
+http://host-ip-address:8088
+username: admin
+password: admin
+```
 
 ---
 
@@ -71,7 +81,7 @@ c1c6e5a2ccef   redis:7                         8 minutes ago   Up 8 minutes     
 ##### How to change logo
 - Place the logo in this location
 
-`Aegus-Analytics/superset-frontend/src/assets/images`
+`Aegus-Analytics`
 
 
 - Then update the logo name in the following file
@@ -81,6 +91,9 @@ c1c6e5a2ccef   redis:7                         8 minutes ago   Up 8 minutes     
 in this location
 
 `APP_ICON = "/static/assets/images/aegus-logo.png"`
+
+- Now navigate to  `cd Aegus-Analytics` and then copy the image to the docker container using:
+`docker cp aegus-logo.png superset_app:/app/superset/static/assets/images/aegus-logo.png`
 
 
 ##### How to modify color palette
@@ -109,4 +122,6 @@ EXTRA_CATEGORICAL_COLOR_SCHEMES = [
 These changes for customization can either be done at a repo level or after the installation. If it is done after the installation, then you would need to the restart the container for the changes to take effect.
 Command to restart the container is:
 
-` sudo docker restart superset_app`
+`sudo docker restart superset_app`
+
+
